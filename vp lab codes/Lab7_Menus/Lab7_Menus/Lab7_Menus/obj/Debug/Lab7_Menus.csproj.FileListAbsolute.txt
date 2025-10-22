@@ -1,0 +1,11 @@
+C:\Users\O M E N\OneDrive\Desktop\assignments\vp lab\Lab7_Menus\Lab7_Menus\Lab7_Menus\bin\Debug\Lab7_Menus.exe.config
+C:\Users\O M E N\OneDrive\Desktop\assignments\vp lab\Lab7_Menus\Lab7_Menus\Lab7_Menus\bin\Debug\Lab7_Menus.exe
+C:\Users\O M E N\OneDrive\Desktop\assignments\vp lab\Lab7_Menus\Lab7_Menus\Lab7_Menus\bin\Debug\Lab7_Menus.pdb
+C:\Users\O M E N\OneDrive\Desktop\assignments\vp lab\Lab7_Menus\Lab7_Menus\Lab7_Menus\obj\Debug\Lab7_Menus.csproj.AssemblyReference.cache
+C:\Users\O M E N\OneDrive\Desktop\assignments\vp lab\Lab7_Menus\Lab7_Menus\Lab7_Menus\obj\Debug\Lab7_Menus.Form1.resources
+C:\Users\O M E N\OneDrive\Desktop\assignments\vp lab\Lab7_Menus\Lab7_Menus\Lab7_Menus\obj\Debug\Lab7_Menus.Properties.Resources.resources
+C:\Users\O M E N\OneDrive\Desktop\assignments\vp lab\Lab7_Menus\Lab7_Menus\Lab7_Menus\obj\Debug\Lab7_Menus.csproj.GenerateResource.cache
+C:\Users\O M E N\OneDrive\Desktop\assignments\vp lab\Lab7_Menus\Lab7_Menus\Lab7_Menus\obj\Debug\Lab7_Menus.csproj.CoreCompileInputs.cache
+C:\Users\O M E N\OneDrive\Desktop\assignments\vp lab\Lab7_Menus\Lab7_Menus\Lab7_Menus\obj\Debug\Lab7_Menus.exe
+C:\Users\O M E N\OneDrive\Desktop\assignments\vp lab\Lab7_Menus\Lab7_Menus\Lab7_Menus\obj\Debug\Lab7_Menus.pdb
+C:\Users\O M E N\OneDrive\Desktop\assignments\vp lab\Lab7_Menus\Lab7_Menus\Lab7_Menus\obj\Debug\Lab7_Menus.exe.config
