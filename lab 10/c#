@@ -1,0 +1,143 @@
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Windows.Forms;
+
+namespace StudentApp
+{
+    public partial class Form1 : Form
+    {
+        string connectionString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\StudentDB.mdf;Integrated Security=True";
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            LoadStudents();
+        }
+
+        private void LoadStudents()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT StudentID, Name, Age FROM Student";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                dataGridViewStudents.DataSource = dt;
+            }
+        }
+
+        private void btnInsert_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtName.Text) || !int.TryParse(txtAge.Text, out int age))
+            {
+                MessageBox.Show("Enter a valid name and age.");
+                return;
+            }
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "INSERT INTO Student (Name, Age) VALUES (@Name, @Age)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Name", txtName.Text.Trim());
+                cmd.Parameters.AddWithValue("@Age", age);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+
+            LoadStudents();
+            MessageBox.Show("Inserted successfully!");
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewStudents.CurrentRow == null)
+            {
+                MessageBox.Show("Select a row to update.");
+                return;
+            }
+
+            int id = Convert.ToInt32(dataGridViewStudents.CurrentRow.Cells["StudentID"].Value);
+            if (!int.TryParse(txtAge.Text, out int age))
+            {
+                MessageBox.Show("Invalid age.");
+                return;
+            }
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Student SET Name=@Name, Age=@Age WHERE StudentID=@ID";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Name", txtName.Text.Trim());
+                cmd.Parameters.AddWithValue("@Age", age);
+                cmd.Parameters.AddWithValue("@ID", id);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+
+            LoadStudents();
+            MessageBox.Show("Updated successfully!");
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewStudents.CurrentRow == null)
+            {
+                MessageBox.Show("Select a record to delete.");
+                return;
+            }
+
+            int id = Convert.ToInt32(dataGridViewStudents.CurrentRow.Cells["StudentID"].Value);
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "DELETE FROM Student WHERE StudentID=@ID";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@ID", id);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+
+            LoadStudents();
+            MessageBox.Show("Deleted successfully!");
+        }
+
+        private void btnRetrieve_Click(object sender, EventArgs e)
+        {
+            string lastName = txtLastName.Text.Trim();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"
+                    SELECT s.StudentID, s.FirstName, s.LastName, s.Major, 
+                           d.DepartmentName AS Department, d.DepartmentChair AS DeptChair
+                    FROM Student s
+                    INNER JOIN Department d ON s.DepartmentID = d.DepartmentID
+                    WHERE (@LastName = '' OR s.LastName = @LastName)";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@LastName", lastName);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+
+                dataGridViewJoin.DataSource = table;
+            }
+        }
+
+        private void dataGridViewStudents_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridViewStudents.CurrentRow != null)
+            {
+                txtName.Text = dataGridViewStudents.CurrentRow.Cells["Name"].Value?.ToString();
+                txtAge.Text = dataGridViewStudents.CurrentRow.Cells["Age"].Value?.ToString();
+            }
+        }
+    }
+}
